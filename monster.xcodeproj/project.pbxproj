@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE35E4B71D3470610083062A /* DragImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE35E4B61D3470610083062A /* DragImage.swift */; settings = {ASSET_TAGS = (); }; };
-		CE35E4B91D34835C0083062A /* MonsterImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE35E4B81D34835C0083062A /* MonsterImg.swift */; settings = {ASSET_TAGS = (); }; };
-		CEDC0CF11D34C49500D8581A /* bite.wav in Resources */ = {isa = PBXBuildFile; fileRef = CEDC0CEC1D34C49500D8581A /* bite.wav */; settings = {ASSET_TAGS = (); }; };
-		CEDC0CF21D34C49500D8581A /* skull.wav in Resources */ = {isa = PBXBuildFile; fileRef = CEDC0CED1D34C49500D8581A /* skull.wav */; settings = {ASSET_TAGS = (); }; };
-		CEDC0CF31D34C49500D8581A /* death.wav in Resources */ = {isa = PBXBuildFile; fileRef = CEDC0CEE1D34C49500D8581A /* death.wav */; settings = {ASSET_TAGS = (); }; };
-		CEDC0CF41D34C49500D8581A /* heart.wav in Resources */ = {isa = PBXBuildFile; fileRef = CEDC0CEF1D34C49500D8581A /* heart.wav */; settings = {ASSET_TAGS = (); }; };
-		CEDC0CF51D34C49500D8581A /* cave-music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CEDC0CF01D34C49500D8581A /* cave-music.mp3 */; settings = {ASSET_TAGS = (); }; };
+		CE35E4B71D3470610083062A /* DragImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE35E4B61D3470610083062A /* DragImage.swift */; };
+		CE35E4B91D34835C0083062A /* MonsterImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE35E4B81D34835C0083062A /* MonsterImg.swift */; };
+		CEDC0CF11D34C49500D8581A /* bite.wav in Resources */ = {isa = PBXBuildFile; fileRef = CEDC0CEC1D34C49500D8581A /* bite.wav */; };
+		CEDC0CF21D34C49500D8581A /* skull.wav in Resources */ = {isa = PBXBuildFile; fileRef = CEDC0CED1D34C49500D8581A /* skull.wav */; };
+		CEDC0CF31D34C49500D8581A /* death.wav in Resources */ = {isa = PBXBuildFile; fileRef = CEDC0CEE1D34C49500D8581A /* death.wav */; };
+		CEDC0CF41D34C49500D8581A /* heart.wav in Resources */ = {isa = PBXBuildFile; fileRef = CEDC0CEF1D34C49500D8581A /* heart.wav */; };
+		CEDC0CF51D34C49500D8581A /* cave-music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CEDC0CF01D34C49500D8581A /* cave-music.mp3 */; };
 		CEDC51BC1D3451C700A26C06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC51BB1D3451C700A26C06 /* AppDelegate.swift */; };
 		CEDC51BE1D3451C700A26C06 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDC51BD1D3451C700A26C06 /* ViewController.swift */; };
 		CEDC51C11D3451C700A26C06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEDC51BF1D3451C700A26C06 /* Main.storyboard */; };
@@ -213,13 +213,16 @@
 				TargetAttributes = {
 					CEDC51B71D3451C700A26C06 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0830;
 					};
 					CEDC51CB1D3451C700A26C06 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0830;
 						TestTargetID = CEDC51B71D3451C700A26C06;
 					};
 					CEDC51D61D3451C700A26C06 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0830;
 						TestTargetID = CEDC51B71D3451C700A26C06;
 					};
 				};
@@ -430,6 +433,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ysh.monster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -441,6 +445,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ysh.monster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -452,6 +457,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ysh.monsterTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/monster.app/monster";
 			};
 			name = Debug;
@@ -464,6 +470,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ysh.monsterTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/monster.app/monster";
 			};
 			name = Release;
@@ -475,6 +482,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ysh.monsterUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = monster;
 				USES_XCTRUNNER = YES;
 			};
@@ -487,6 +495,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ysh.monsterUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = monster;
 				USES_XCTRUNNER = YES;
 			};

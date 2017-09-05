@@ -14,6 +14,8 @@ class DragImage: UIImageView {
     var originalPosition: CGPoint!
     var dropTarget: UIView?
     
+    var draggedItem = 0
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -22,23 +24,27 @@ class DragImage: UIImageView {
         super.init(coder: aDecoder)
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         originalPosition = self.center
+        draggedItem = currentItem
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first{
-            let position = touch.locationInView(self.superview)
-            self.center = CGPointMake(position.x, position.y)
+            let position = touch.location(in: self.superview)
+            self.center = CGPoint(x: position.x, y: position.y)
             
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first, let target = dropTarget {
-            let position = touch.locationInView(self.superview?.superview)
-            if CGRectContainsPoint(target.frame, position){
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "onTargetDropped", object: nil))
+            let position = touch.location(in: self.superview?.superview)
+            
+            let data:[String: Int] = ["item": draggedItem]
+            
+            if target.frame.contains(position){
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "onTargetDropped"), object: nil, userInfo: data)
             }
         }
         

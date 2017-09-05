@@ -9,6 +9,8 @@
 import UIKit
 import AVFoundation
 
+var currentItem = 0
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var monsterImage: MonsterImg!
@@ -31,14 +33,15 @@ class ViewController: UIViewController {
     let DIM_ALPHA: CGFloat = 0.2
     let OPAQUE: CGFloat = 1.0
     let MAX_PENALTIES = 3
+    let HEART = 0
+    let FOOD = 1
     let BLUE_MONSTER = 1
     let GRAY_MONSTER = 0
     var monster = 0; //BLUE_MONSTER or GRAY_MONSTER
     
     var currentPenalties = 0
-    var timer: NSTimer!
+    var timer: Timer!
     var monsterHappy = false
-    var currentItem: UInt32 = 0
     
     var musicPlayer: AVAudioPlayer!
     var sfxBite: AVAudioPlayer!
@@ -50,18 +53,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "itemDroppedOnCharacter:", name: "onTargetDropped", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.itemDroppedOnCharacter(_:)), name: NSNotification.Name(rawValue: "onTargetDropped"), object: nil)
         
         do{
-            try musicPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("cave-music", ofType: "mp3")!))
+            try musicPlayer = AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "cave-music", ofType: "mp3")!))
             
-            try sfxBite = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("bite", ofType: "wav")!))
+            try sfxBite = AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "bite", ofType: "wav")!))
             
-            try sfxHeart = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("heart", ofType: "wav")!))
+            try sfxHeart = AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "heart", ofType: "wav")!))
             
-            try sfxDeath = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("death", ofType: "wav")!))
+            try sfxDeath = AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "death", ofType: "wav")!))
             
-            try sfxSkull = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("skull", ofType: "wav")!))
+            try sfxSkull = AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "skull", ofType: "wav")!))
             
             musicPlayer.prepareToPlay()
             musicPlayer.play()
@@ -77,41 +80,41 @@ class ViewController: UIViewController {
 
     }
 
-    @IBAction func onBluePressed(sender: AnyObject) {
+    @IBAction func onBluePressed(_ sender: AnyObject) {
         monster = BLUE_MONSTER
         startGame()
     }
     
-    @IBAction func onGrayPressed(sender: AnyObject) {
+    @IBAction func onGrayPressed(_ sender: AnyObject) {
         monster = GRAY_MONSTER
         startGame()
     }
     
-    @IBAction func onRestartPressed(sender: AnyObject) {
+    @IBAction func onRestartPressed(_ sender: AnyObject) {
         pelantyImage1.alpha = DIM_ALPHA
         pelantyImage2.alpha = DIM_ALPHA
         pelantyImage3.alpha = DIM_ALPHA
         
         currentPenalties = 0
         
-        restartButton.hidden = true
+        restartButton.isHidden = true
         startGame()
     }
     
     func startGame(){
-        monsterImage.hidden = false
-        pelantyImage1.hidden = false
-        pelantyImage2.hidden = false
-        pelantyImage3.hidden = false
+        monsterImage.isHidden = false
+        pelantyImage1.isHidden = false
+        pelantyImage2.isHidden = false
+        pelantyImage3.isHidden = false
         pelantyImage1.alpha = DIM_ALPHA
         pelantyImage2.alpha = DIM_ALPHA
         pelantyImage3.alpha = DIM_ALPHA
-        livespanel.hidden = false
-        foodImage.hidden = false
-        heartImage.hidden = false
-        selectBlueMonster.hidden = true
-        selectGrayMonster.hidden = true
-        firstWindowLabel.hidden = true
+        livespanel.isHidden = false
+        foodImage.isHidden = false
+        heartImage.isHidden = false
+        selectBlueMonster.isHidden = true
+        selectGrayMonster.isHidden = true
+        firstWindowLabel.isHidden = true
         
         foodImage.dropTarget = monsterImage
         heartImage.dropTarget = monsterImage
@@ -127,12 +130,12 @@ class ViewController: UIViewController {
             timer.invalidate()
         }
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "changeGameState", userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(ViewController.changeGameState), userInfo: nil, repeats: true)
     }
     
     func changeGameState(){
         if monsterHappy == false {
-            currentPenalties++
+            currentPenalties += 1
             sfxSkull.play()
             
             if currentPenalties == 1 {
@@ -156,19 +159,26 @@ class ViewController: UIViewController {
         monsterHappy = false
     }
     
-    func itemDroppedOnCharacter(notif: AnyObject){
-        monsterHappy = true
-        startTimer()
+    func itemDroppedOnCharacter(_ notif: NSNotification){
         
-        foodImage.alpha = DIM_ALPHA
-        foodImage.userInteractionEnabled = false
-        heartImage.alpha = DIM_ALPHA
-        heartImage.userInteractionEnabled = false
+        let droppedItem = notif.userInfo?["item"] as! Int
         
-        if currentItem == 0 {
-            sfxHeart.play()
-        } else {
-            sfxBite.play()
+        if droppedItem == currentItem {
+            
+            monsterHappy = true
+            startTimer()
+            
+            foodImage.alpha = DIM_ALPHA
+            foodImage.isUserInteractionEnabled = false
+            heartImage.alpha = DIM_ALPHA
+            heartImage.isUserInteractionEnabled = false
+            
+            if currentItem == HEART {
+                sfxHeart.play()
+            } else {
+                sfxBite.play()
+            }
+            
         }
     }
     
@@ -177,18 +187,18 @@ class ViewController: UIViewController {
         
         if rand == 0 {
             foodImage.alpha = DIM_ALPHA
-            foodImage.userInteractionEnabled = false
+            foodImage.isUserInteractionEnabled = false
             
             heartImage.alpha = OPAQUE
-            heartImage.userInteractionEnabled = true
+            heartImage.isUserInteractionEnabled = true
         } else {
             heartImage.alpha = DIM_ALPHA
-            heartImage.userInteractionEnabled = false
+            heartImage.isUserInteractionEnabled = false
             
             foodImage.alpha = OPAQUE
-            foodImage.userInteractionEnabled = true
+            foodImage.isUserInteractionEnabled = true
         }
-        currentItem = rand
+        currentItem = Int(rand)
     }
     
     func gameOver(){
@@ -196,7 +206,7 @@ class ViewController: UIViewController {
         monsterImage.deathAnimation(monster)
         
         sfxDeath.play()
-        restartButton.hidden = false
+        restartButton.isHidden = false
     }
     
 
